@@ -1,38 +1,53 @@
+'use strict';
 var express = require('express');
 var app = express();
 
 var bodyParser = require('body-parser')
-app.use( bodyParser.json() );
+app.use(bodyParser.json());
 
 
-var client = require('redis').createClient(process.env.REDIS_PORT || process.env.REDIS_URL);
+var redis = require('redis');
+var Promise = require("bluebird");
+Promise.promisifyAll(redis.RedisClient.prototype);
+Promise.promisifyAll(redis.Multi.prototype);
 
-var dictionary = {
-  "blah": ["blub", "bubbeln"],
-  "blah2": ["blub2", "bubbeln2"]
-}
+var client = redis.createClient(process.env.REDIS_URL || "redis://redis:6379");
+
+var dictionary;
+
+withDictionary(dic => console.log(dic));
 
 app.use(express.static(__dirname + '/public'));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 function withDictionary(cb) {
-  if (dictionary) {
-    cb(dictionary);
-  } else {
-    //TODO get dictionary from database
-  }
+    if (dictionary) {
+        cb(dictionary);
+    } else {
+        dictionary = {};
+        client.keysAsync("*").then(res => {
+            let promises = [];
+            for (let key of res) {
+                promises.push(client.smembersAsync(key).then(val => {
+                    dictionary[key] = val;
+                }))
+            }
+            Promise.all(promises).then(() => cb(dictionary))
+        })
+    }
 }
 
 app.get('/dictionary', function(req, res) {
-  withDictionary(function(dictionary) {
-    res.json(dictionary);
-  });
+    withDictionary(dic => {
+        res.json(dic);
+    });
 });
 
 app.post('/translation', function(req, res) {
-  const latin = req.body.latin;
-  const german = req.body.german;
-  dictionary[latin] = german.split(",").map(x => x.trim());
+    const latin = req.body.latin;
+    const german = req.body.german.split(",").map(x => x.trim());
+    dictionary[latin] = german
+    client.sadd(latin, german)
 });
 
 

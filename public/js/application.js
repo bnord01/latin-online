@@ -30,8 +30,10 @@ angular.module("latin-o", ['ui.bootstrap'])
     $scope.addTranslation = function () {
         if ($scope.latin && $scope.german) {
             $scope.dictionary[$scope.latin] = $scope.german.split(",").map(x => x.trim());
-            $scope.keys = Object.keys(dictionary);
+            $scope.keys = Object.keys($scope.dictionary);
             $http.post("translation/",{latin:$scope.latin,german:$scope.german});
+            $scope.latin=""
+            $scope.german=""
         }
 
     }
@@ -61,6 +63,7 @@ angular.module("latin-o", ['ui.bootstrap'])
         }
         $scope.correct = correct;
         $scope.mistakes = mistakes;
+        updateRandomLatin();
     }
   });
 

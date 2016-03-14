@@ -17,8 +17,7 @@
                 <h2>Üben</h2>
                 <div class=col-md-12>
                     <form name="testForm">
-                        <label for="current-latin">Latein: {{current_latin}}</label>
-                        <label for="current-german">Deutsch:</label>
+                        <label for="current-german">{{current_latin}}:</label>
                         <input name="current-german" ng-model="current_german" />
                         <button class="btn btn-primary btn-sm" ng-click="check()">Prüfen</button>
                     </form>
@@ -31,7 +30,7 @@
                         <span class="glyphicon glyphicon-remove"></span> Fehler!
                     </div>
                     <ul class="col-md-10">
-                        <li ng-repeat="mistake in mistakes">{{mistake}}</li>
+                        <li ng-repeat="mistake in mistakes track by $index">{{mistake}}</li>
                     </ul>
                 </div>
             </div>
@@ -49,9 +48,9 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h3 ng-if="dictionary">Einträge: {{numEntries()}}</h3>
+                    <h2 ng-if="dictionary">Einträge: {{numEntries()}}</h3>
                     <ul ng-if="dictionary">
-                        <li ng-repeat="latin in keys|orderBy">{{latin}} : <span ng-repeat="german in dictionary[latin]">{{german}}<span ng-if="!$last">, </span></span>
+                        <li ng-repeat="latin in keys|orderBy">{{latin}} : <span ng-repeat="german in dictionary[latin] track by $index">{{german}}<span ng-if="!$last">, </span></span>
                         </li>
                     </ul>
                 </div>
