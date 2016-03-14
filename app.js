@@ -25,10 +25,10 @@ function withDictionary(cb) {
         cb(dictionary);
     } else {
         dictionary = {};
-        client.keysAsync("*").then(res => {
+        client.smembersAsync("phrases").then(res => {
             let promises = [];
             for (let key of res) {
-                promises.push(client.smembersAsync(key).then(val => {
+                promises.push(client.smembersAsync("phrase-"+key).then(val => {
                     dictionary[key] = val;
                 }))
             }
@@ -47,14 +47,16 @@ app.post('/translation', function(req, res) {
     const latin = req.body.latin;
     const german = req.body.german.split(",").map(x => x.trim());
     dictionary[latin] = german
-    client.sadd(latin, german)
+    client.sadd("phrases",latin)
+    client.sadd("phrase-"+latin, german)
     res.end()
 });
 
 app.post('/remove', function(req, res) {
     const latin = req.body.latin;
     delete dictionary[latin];
-    client.del(latin)
+    client.srem("phrases",latin)
+    client.del("phrase-"+latin)
     res.end()
 });
 
