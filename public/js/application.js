@@ -6,7 +6,7 @@ angular.module("latin-o", ['ui.bootstrap'])
     $scope.current_german = "";
     $scope.correct = true;
     $scope.mistakes=[];
-    $http.get("dictionary/").success(function(data) {
+    $http.get("dictionary").success(function(data) {
       $scope.dictionary = data;
       $scope.keys = Object.keys($scope.dictionary);
       updateRandomLatin();
@@ -31,7 +31,7 @@ angular.module("latin-o", ['ui.bootstrap'])
         if ($scope.latin && $scope.german) {
             $scope.dictionary[$scope.latin] = $scope.german.split(",").map(x => x.trim());
             $scope.keys = Object.keys($scope.dictionary);
-            $http.post("translation/",{latin:$scope.latin,german:$scope.german});
+            $http.post("translation",{latin:$scope.latin,german:$scope.german});
             $scope.latin=""
             $scope.german=""
         }
@@ -70,7 +70,7 @@ angular.module("latin-o", ['ui.bootstrap'])
     $scope.remove = function(latin) {
         delete $scope.dictionary[latin];
         $scope.keys = Object.keys($scope.dictionary)
-        $http.post("remove/",{latin:latin})
+        $http.post("remove",{latin:latin})
     }
   });
 
