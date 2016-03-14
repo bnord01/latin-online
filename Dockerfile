@@ -11,15 +11,14 @@ USER	node
 
 # Install npm dependencies
 COPY	package.json /usr/src/app/
-RUN	npm install
+RUN	npm install --ignore-scripts
 
 # Install bower dependencies
 COPY	bower.json /usr/src/app/
-RUN	npm run bower -- install
+RUN	node node_modules/bower/bin/bower install
 
 # Copy the remaining files and build the application
 COPY	. /usr/src/app
-RUN	npm run	grunt -- dist
 
 CMD [ "npm", "start" ]
 

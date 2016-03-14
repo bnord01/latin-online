@@ -25,7 +25,7 @@ app.get('/dictionary', function(req, res) {
   });
 });
 
-app.push('/translation/:latin/:german', function(req, res) {
+app.post('/translation/:latin/:german', function(req, res) {
   const latin = req.params.latin,
     german = req.params.german;
   dictionary[latin] = german.split(",");

@@ -16,6 +16,8 @@ angular.module("latin-o", ['ui.bootstrap'])
       });
     };
 
+  });
+
 
 // Controller for the info modal.
 angular.module('latin-o').controller('InfoModalInstanceCtrl', function($scope, $uibModalInstance) {
