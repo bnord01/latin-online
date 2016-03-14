@@ -38,13 +38,19 @@
             <h2>Wörterbuch</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <form name="inputForm">
-                        <label for="latin">Latein:</label>
-                        <input name="latin" ng-model="latin" />
-                        <label for="german">Deutsch:</label>
-                        <input name="german" ng-model="german" />
-                        <button class="btn btn-primary btn-sm" ng-click="addTranslation()">Hinzufügen</button>
-                    </form>
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-xs-5">
+                            <label for="latin">Latein:</label>
+                        </div>
+                        <input class="col-lg-3 col-md-3 col-xs-7" name="latin" ng-model="latin" />
+                        <div class="col-lg-2 col-md-2 col-xs-5">
+                            <label for="german">Deutsch:</label>
+                        </div>
+                        <input class="col-lg-3 col-md-3 col-xs-7" name="german" ng-model="german" />
+                        <div class="col-lg-2 col-md-2 col-xs-6">
+                            <button class="btn btn-primary btn-sm " ng-click="addTranslation()">Hinzufügen</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <ul ng-if="dictionary">
