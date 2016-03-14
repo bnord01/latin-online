@@ -50,6 +50,11 @@ app.post('/translation', function(req, res) {
     client.sadd(latin, german)
 });
 
+app.post('/remove', function(req, res) {
+    const latin = req.body.latin;
+    delete dictionary[latin];
+    client.del(latin)
+});
 
 
 app.listen(process.env.PORT || 3000);

@@ -50,7 +50,9 @@
                 <div class="col-md-12">
                     <h2 ng-if="dictionary">Einträge: {{numEntries()}}</h3>
                     <ul ng-if="dictionary">
-                        <li ng-repeat="latin in keys|orderBy">{{latin}} : <span ng-repeat="german in dictionary[latin] track by $index">{{german}}<span ng-if="!$last">, </span></span>
+                        <li ng-repeat="latin in keys|orderBy">{{latin}} :
+                            <span ng-repeat="german in dictionary[latin] track by $index">{{german}}<span ng-if="!$last">, </span></span>
+                            <button type="button" class="btn btn-link" ng-click="remove(latin)"><span class="glyphicon glyphicon-remove"></span></button>
                         </li>
                     </ul>
                 </div>

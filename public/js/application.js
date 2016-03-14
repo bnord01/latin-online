@@ -35,7 +35,7 @@ angular.module("latin-o", ['ui.bootstrap'])
             $scope.latin=""
             $scope.german=""
         }
-
+        updateRandomLatin();
     }
 
     function updateRandomLatin() {
@@ -47,12 +47,13 @@ angular.module("latin-o", ['ui.bootstrap'])
     $scope.check = function() {
         let input = $scope.current_german.split(",").map(x=>x.trim());
         let expected = $scope.dictionary[$scope.current_latin];
-        let correct = true;
+        let correct = false
         let mistakes = [];
         for(let e of expected) {
             if(!input.includes(e)){
                 mistakes.push("Eingabe enthält nicht: " + e)
-                correct = false;
+            } else {
+                correct = true;
             }
         }
         for(let i of input) {
@@ -64,6 +65,12 @@ angular.module("latin-o", ['ui.bootstrap'])
         $scope.correct = correct;
         $scope.mistakes = mistakes;
         updateRandomLatin();
+    }
+
+    $scope.remove = function(latin) {
+        delete $scope.dictionary[latin];
+        $scope.keys = Object.keys($scope.dictionary)
+        $http.post("remove/",{latin:latin})
     }
   });
 
