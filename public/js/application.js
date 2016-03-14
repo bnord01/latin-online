@@ -1,8 +1,15 @@
 angular.module("latin-o", ['ui.bootstrap'])
   .controller("LatinOController", function($scope, $http, $filter, $uibModal) {
     $scope.dictionary;
+    $scope.keys;
+    $scope.current_latin;
+    $scope.current_german = "";
+    $scope.correct = true;
+    $scope.mistakes=[];
     $http.get("dictionary/").success(function(data) {
       $scope.dictionary = data;
+      $scope.keys = Object.keys($scope.dictionary);
+      updateRandomLatin();
     });
 
 
@@ -16,6 +23,45 @@ angular.module("latin-o", ['ui.bootstrap'])
       });
     };
 
+    $scope.numEntries = function () {
+        return $scope.keys.length;
+    }
+
+    $scope.addTranslation = function () {
+        if ($scope.latin && $scope.german) {
+            $scope.dictionary[$scope.latin] = $scope.german.split(",").map(x => x.trim());
+            $scope.keys = Object.keys(dictionary);
+            $http.post("translation/",{latin:$scope.latin,german:$scope.german});
+        }
+
+    }
+
+    function updateRandomLatin() {
+        let keys = $scope.keys;
+        $scope.current_latin = keys[Math.floor(Math.random() * keys.length)];
+        $scope.current_german = "";
+    }
+
+    $scope.check = function() {
+        let input = $scope.current_german.split(",").map(x=>x.trim());
+        let expected = $scope.dictionary[$scope.current_latin];
+        let correct = true;
+        let mistakes = [];
+        for(let e of expected) {
+            if(!input.includes(e)){
+                mistakes.push("Eingabe enthält nicht: " + e)
+                correct = false;
+            }
+        }
+        for(let i of input) {
+            if(!expected.includes(i)){
+                mistakes.push("Wörterbuch enthält nicht: " + i)
+                correct = false;
+            }
+        }
+        $scope.correct = correct;
+        $scope.mistakes = mistakes;
+    }
   });
 
 

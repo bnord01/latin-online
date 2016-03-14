@@ -1,7 +1,11 @@
 var express = require('express');
 var app = express();
 
-//var client = require('redis').createClient(process.env.REDIS_URL);
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );
+
+
+var client = require('redis').createClient(process.env.REDIS_PORT || process.env.REDIS_URL);
 
 var dictionary = {
   "blah": ["blub", "bubbeln"],
@@ -25,10 +29,10 @@ app.get('/dictionary', function(req, res) {
   });
 });
 
-app.post('/translation/:latin/:german', function(req, res) {
-  const latin = req.params.latin,
-    german = req.params.german;
-  dictionary[latin] = german.split(",");
+app.post('/translation', function(req, res) {
+  const latin = req.body.latin;
+  const german = req.body.german;
+  dictionary[latin] = german.split(",").map(x => x.trim());
 });
 
 

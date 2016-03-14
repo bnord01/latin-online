@@ -17,7 +17,7 @@ RUN	npm install --ignore-scripts
 COPY	bower.json /usr/src/app/
 RUN	node node_modules/bower/bin/bower install
 
-# Copy the remaining files and build the application
+# Add the remaining files
 COPY	. /usr/src/app
 
 CMD [ "npm", "start" ]

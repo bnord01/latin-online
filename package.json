@@ -5,9 +5,11 @@
   "author": "bnord01",
   "main": "app.js",
   "dependencies": {
-    "bower": "^1.6.5",
-    "express": "^4.13.3",
-    "mongoose": "^4.2.4"
+    "body-parser": "^1.15.0",
+    "bower": "^1.7.6",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.7",
+    "redis": "^2.5.0-1"
   },
   "scripts": {
     "start": "node app.js",
@@ -16,11 +18,9 @@
   },
   "private": true,
   "license": "MIT",
-  "devDependencies": {
-    "jasmine": "^2.3.2"
-  },
+  "devDependencies": {},
   "engines": {
-    "node": "^4.2.2",
-    "npm": "^2.14.7"
+    "node": "^4.4.0",
+    "npm": "^3.8.1"
   }
 }
