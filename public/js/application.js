@@ -70,7 +70,8 @@ angular.module("latin-o", ['ui.bootstrap'])
     $scope.remove = function(latin) {
         delete $scope.dictionary[latin];
         $scope.keys = Object.keys($scope.dictionary)
-        $http.post("remove",{latin:latin})
+        $http.post("remove",{latin:latin})        
+        updateRandomLatin();
     }
   });
 
