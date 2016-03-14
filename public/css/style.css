@@ -1,0 +1,12 @@
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+.infobox {
+    position: absolute;
+    top: 24px;
+    background-color: #f1c40f;
+    border-radius: 5px;
+    z-index: 10;
+    padding: 15px;
+}

@@ -1,0 +1,26 @@
+{
+  "name": "latin-o",
+  "version": "1.0.0",
+  "description": "A latin lerning application",
+  "author": "bnord01",
+  "main": "app.js",
+  "dependencies": {
+    "bower": "^1.6.5",
+    "express": "^4.13.3",
+    "mongoose": "^4.2.4"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "postinstall": "node node_modules/bower/bin/bower install",
+    "test": "node node_modules/jasmine/bin/jasmine.js"
+  },
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine": "^2.3.2"
+  },
+  "engines": {
+    "node": "^4.2.2",
+    "npm": "^2.14.7"
+  }
+}

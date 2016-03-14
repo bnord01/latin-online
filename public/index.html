@@ -1,0 +1,53 @@
+<!doctype html>
+<html xmlns:ng="http://angularjs.org" lang="en" ng-app="latin-o">
+
+<head>
+  <title>Latin-O</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <!--link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /-->
+</head>
+
+<body ng-cloak>
+  <div class="container-fulid" style="max-width: calc(100vw - 15px);">
+    <div ng-controller="LatinOController">
+      <div class="row" style="margin-left:0px margin-right: 0px;">
+        <div class="col-md-2">
+          <button type="button" class="btn btn-info" aria-label="How does this work?" ng-click="openInfo()">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> How does this work?
+          </button>
+        </div>
+        <div class="col-md-5">
+          <form name="inputForm">
+            <label for="latin">Latein:</label>
+            <input name="latin" ng-model="latin"/>
+            <label for="german">Deutsch:</label>
+            <input name="german" ng-model="german" />
+            <button class="btn btn-primary btn-sm" ng-click="addTranslation()">Hinzufügen</button>
+            <!--button class="btn btn-danger btn-sm" ng-show="loading">Loading</button-->
+          </form>
+        </div>
+        <div class="col-md-5">
+        <div class="infobox col-md-11">
+          <h3 ng-if="dictionary">Einträge: {{dictionary.length}})</h3>
+        </div>
+        </div>
+      </div>
+      <div class=row>
+        <div class="col-md-12">
+          <ul>
+            <li ng-repate="translation in dictionary['blub']">{{translation}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="bower_components/angular/angular.min.js"></script>
+  <!--script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script-->
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="js/application.js"></script>
+</body>
+
+</html>
