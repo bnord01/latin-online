@@ -48,12 +48,14 @@ app.post('/translation', function(req, res) {
     const german = req.body.german.split(",").map(x => x.trim());
     dictionary[latin] = german
     client.sadd(latin, german)
+    res.end()
 });
 
 app.post('/remove', function(req, res) {
     const latin = req.body.latin;
     delete dictionary[latin];
     client.del(latin)
+    res.end()
 });
 
 
