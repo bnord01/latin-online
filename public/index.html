@@ -14,8 +14,8 @@
         <div ng-controller="LatinOController">
             <h1>Latin-O(nline)</h1>
             <h2>Üben</h2>
-                <div class="row">
-                    <div class=col-md-12>
+            <div class="row">
+                <div class=col-md-12>
                     <form name="testForm">
                         <label for="current-german">{{current_latin}}:</label>
                         <input name="current-german" ng-model="current_german" />
@@ -23,10 +23,10 @@
                     </form>
                 </div>
                 <div class="col-md-12">
-                    <div class="col-md-2" ng-if="correct" >
+                    <div class="col-md-2" ng-if="correct">
                         <span class="glyphicon glyphicon-ok"></span> Korrekt!
                     </div>
-                    <div class="col-md-2" ng-if="!correct" >
+                    <div class="col-md-2" ng-if="!correct">
                         <span class="glyphicon glyphicon-remove"></span> Fehler!
                     </div>
                     <ul class="col-md-10">
@@ -34,7 +34,8 @@
                     </ul>
                 </div>
             </div>
-            <h2>Hinzufügen</h2>
+
+            <h2>Wörterbuch</h2>
             <div class="row">
                 <div class="col-md-6">
                     <form name="inputForm">
@@ -45,9 +46,6 @@
                         <button class="btn btn-primary btn-sm" ng-click="addTranslation()">Hinzufügen</button>
                     </form>
                 </div>
-            </div>
-            <h2>Wörterbuch</h2>
-            <div class="row">
                 <div class="col-md-12">
                     <ul ng-if="dictionary">
                         <li ng-repeat="latin in keys|orderBy">{{latin}} :
