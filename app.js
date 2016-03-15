@@ -91,17 +91,7 @@ app.get('/reset_learnset', function(req, res) {
 		return client.delAsync(keys)
 	}).then(del_res => {
 		console.log(`Deletion result: ${del_res}`)
-        withDictionary(dict =>{
-            let mult = client.multi()
-            for(let phrase in dict) {
-                mult = mult.set(`learnset:level:${phrase}`,0)
-            }
-            mult.execAsync().then(ins_res => {
-        		console.log(`Insertion result: ${ins_res}`);
-        		res.end("Successfully deleted and recreated learnsets.")
-        	})
-        })
-		//return client.sunionstoreAsync('learnset:level:' + LEARN_LEVELS[0], 'phrases')
+        res.end("Successfully deleted learnsets.")        		
 	})
 })
 
@@ -109,6 +99,7 @@ app.post('/correct',function(req,res){
     const phrase = req.body.phrase
     const day = moment().format('YYYYMMDD')
     client.getAsync(`learnset:level:${phrase}`).then(old_lvl => {
+        old_lvl = old_lvl || 0
         let lvl = Math.min(old_lvl+1,LEARN_LEVELS.length - 1)
         console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
         return client.multi()
@@ -125,6 +116,7 @@ app.post('/correct',function(req,res){
 app.post('/incorrect',function(req,res){
     const phrase = req.body.phrase
     client.getAsync(`learnset:level:${phrase}`).then(old_lvl =>{
+        old_lvl = old_lvl || 0
         let lvl = Math.max(old_lvl-1,0)
         console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
         return client.setAsync(`learnset:level:${phrase}`,lvl)
