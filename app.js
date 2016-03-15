@@ -43,21 +43,39 @@ app.get('/dictionary', function(req, res) {
     });
 });
 
+app.get('/download',function(req,res) {
+    withDictionary(dict => {
+        //let buf = new Buffer(JSON.stringify(dict),"utf-8")
+        res.set('Content-Disposition', 'attachment; filename="dictionary.json"')
+        res.set('Content-Type', 'application/json')
+        let replacer = app.get('json replacer');
+        let body = JSON.stringify(dict, replacer, 2);
+        res.send(body);
+        //buf.pipe(res);
+    })
+});
+
 app.post('/translation', function(req, res) {
     const latin = req.body.latin;
     const german = req.body.german.split(",").map(x => x.trim());
-    dictionary[latin] = german
-    client.sadd("phrases",latin)
-    client.sadd("phrase-"+latin, german)
-    res.end()
+    withDictionary(dict => {
+        if(!dict[latin]) {
+            dict[latin] = german
+            client.sadd("phrases",latin)
+            client.sadd("phrase-"+latin, german)
+            res.end()
+        } else {
+            res.status(409).end()
+        }
+    })
 });
 
 app.post('/remove', function(req, res) {
-    const latin = req.body.latin;
-    delete dictionary[latin];
-    client.srem("phrases",latin)
-    client.del("phrase-"+latin)
-    res.end()
+    //const latin = req.body.latin;
+    //delete dictionary[latin];
+    //client.srem("phrases",latin)
+    //client.del("phrase-"+latin)
+    res.status(404).end()
 });
 
 
