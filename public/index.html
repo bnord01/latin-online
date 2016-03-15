@@ -70,7 +70,7 @@
                         <tr ng-repeat="latin in keys|orderBy"><td>{{latin}}</td><td>
                             <span ng-repeat="german in dictionary[latin] track by $index">{{german}}<span ng-if="!$last">, </span></span></td>
                             <td ng-if="enable_remove">
-                                <button type="button" class="btn btn-link" ng-click="remove(latin)"><span class="glyphicon glyphicon-remove"></span></button>
+                                <button type="button" class="btn btn-link btn-xs" ng-click="remove(latin)"><span class="glyphicon glyphicon-remove"></span></button>
                             </td>
                         </tr>
                     </table>
