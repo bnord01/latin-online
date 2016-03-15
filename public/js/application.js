@@ -10,7 +10,7 @@ angular.module("latin-o", ['ui.bootstrap'])
     $scope.correct = true;
     $scope.mistakes=[];
     $scope.enable_remove = ENABLE_REMOVE;
-    
+
     $http.get("dictionary").success(function(data) {
       $scope.dictionary = data;
       $scope.keys = Object.keys($scope.dictionary);
@@ -74,10 +74,13 @@ angular.module("latin-o", ['ui.bootstrap'])
 
     if(ENABLE_REMOVE) {
         $scope.remove = function(latin) {
-            delete $scope.dictionary[latin];
-            $scope.keys = Object.keys($scope.dictionary)
-            $http.post("remove",{latin:latin})
-            updateRandomLatin();
+            let r = confirm("Eintrag "+ latin+ " wirklich löschen?")
+            if(r) {
+                delete $scope.dictionary[latin];
+                $scope.keys = Object.keys($scope.dictionary)
+                $http.post("remove",{latin:latin})
+                updateRandomLatin();
+            }
         }
     }
   });
