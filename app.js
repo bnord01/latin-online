@@ -1,4 +1,7 @@
 'use strict';
+
+const ENABLE_REMOVE = true;
+
 var express = require('express');
 var app = express();
 
@@ -61,8 +64,10 @@ app.post('/translation', function(req, res) {
     withDictionary(dict => {
         if(!dict[latin]) {
             dict[latin] = german
-            client.sadd("phrases",latin)
-            client.sadd("phrase-"+latin, german)
+            client.multi()
+                .sadd("phrases",latin)
+                .sadd("phrase-"+latin, german)
+                .exec();
             res.end()
         } else {
             res.status(409).end()
@@ -71,11 +76,15 @@ app.post('/translation', function(req, res) {
 });
 
 app.post('/remove', function(req, res) {
-    //const latin = req.body.latin;
-    //delete dictionary[latin];
-    //client.srem("phrases",latin)
-    //client.del("phrase-"+latin)
-    res.status(404).end()
+    if(ENABLE_REMOVE) {
+        const latin = req.body.latin;
+        delete dictionary[latin];
+        client.srem("phrases",latin)
+        client.del("phrase-"+latin)
+        res.end()
+    } else {
+        res.status(403).end()
+    }
 });
 
 

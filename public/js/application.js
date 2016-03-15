@@ -1,3 +1,6 @@
+'use strict';
+const ENABLE_REMOVE = true;
+
 angular.module("latin-o", ['ui.bootstrap'])
   .controller("LatinOController", function($scope, $http, $filter, $uibModal) {
     $scope.dictionary;
@@ -6,6 +9,8 @@ angular.module("latin-o", ['ui.bootstrap'])
     $scope.current_german = "";
     $scope.correct = true;
     $scope.mistakes=[];
+    $scope.enable_remove = ENABLE_REMOVE;
+    
     $http.get("dictionary").success(function(data) {
       $scope.dictionary = data;
       $scope.keys = Object.keys($scope.dictionary);
@@ -67,14 +72,14 @@ angular.module("latin-o", ['ui.bootstrap'])
         updateRandomLatin();
     }
 
-    /*
-    $scope.remove = function(latin) {
-        delete $scope.dictionary[latin];
-        $scope.keys = Object.keys($scope.dictionary)
-        $http.post("remove",{latin:latin})
-        updateRandomLatin();
+    if(ENABLE_REMOVE) {
+        $scope.remove = function(latin) {
+            delete $scope.dictionary[latin];
+            $scope.keys = Object.keys($scope.dictionary)
+            $http.post("remove",{latin:latin})
+            updateRandomLatin();
+        }
     }
-    */
   });
 
 
