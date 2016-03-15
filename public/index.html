@@ -16,10 +16,12 @@
             <h2>Üben</h2>
             <div class="row">
                 <div class=col-md-12>
-                    <form name="testForm">
-                        <label for="current-german">{{current_latin}}:</label>
-                        <input name="current-german" ng-model="current_german" />
-                        <button class="btn btn-primary btn-sm" ng-click="check()">Prüfen</button>
+                    <form class="form-inline" name="testForm">
+                        <div class="form-group">
+                            <label for="current-german">{{current_latin}}:</label>
+                            <input name="current-german" class="form-control" ng-model="current_german" />
+                        </div>
+                        <button class="btn btn-primary btn-sm" type="submit" ng-click="check()">Prüfen</button>
                     </form>
                 </div>
                 <div class="col-md-12">
@@ -37,22 +39,19 @@
 
             <h2>Wörterbuch</h2>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-lg-2 col-md-2 col-xs-12">
+                <div class="col-md-12">
+                    <form class="form-inline">
+                        <div class="form-group">
                             <label for="latin">Latein:</label>
+                            <input name="latin" class="form-control" ng-model="latin" />
                         </div>
-                        <input class="col-lg-3 col-md-3 col-xs-10" name="latin" ng-model="latin" />
 
-                        <div class="col-lg-2 col-md-2 col-xs-12">
+                        <div class="form-group">
                             <label for="german">Deutsch:</label>
+                            <input name="german" class="form-control" ng-model="german" />
                         </div>
-                        <input class="col-lg-3 col-md-3 col-xs-10" name="german" ng-model="german" />
-
-                        <div class="col-lg-1 col-md-2 col-xs-12">
-                            <button class="btn btn-primary btn-sm " ng-click="addTranslation()">Hinzufügen</button>
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-primary btn-sm " ng-click="addTranslation()">Hinzufügen</button>
+                    </form>
                 </div>
                 <div class="col-md-12">
                     <ul ng-if="dictionary">
