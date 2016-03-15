@@ -1,0 +1,30 @@
+<!doctype html>
+<html xmlns:ng="http://angularjs.org" lang="en" ng-app="latin-o">
+
+<head>
+    <title>Latin-O</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /-->
+</head>
+
+<body>
+    <div class="container">
+        <form class="form-horizontal" name="uploadForm" method="post" enctype="multipart/form-data" action="/upload">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="file">Datei:</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <input name="dictionary" type="file" class="form-control" />
+                        <span class="input-group-btn"><button class="btn btn-primary" type="submit">Hochladen</button></span>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
+</html>

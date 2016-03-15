@@ -16,6 +16,10 @@ Promise.promisifyAll(redis.Multi.prototype);
 
 var client = redis.createClient(process.env.REDIS_URL || "redis://redis:6379");
 
+var fs = require("fs")
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+
 var dictionary;
 
 withDictionary(dic => console.log(dic));
@@ -85,6 +89,22 @@ app.post('/remove', function(req, res) {
     } else {
         res.status(403).end()
     }
+});
+
+app.post('/upload', upload.single('dictionary'), function(req, res) {
+    let result = JSON.parse(fs.readFileSync(req.file.path))
+    withDictionary(dict => {
+        for(let latin in result) {
+            if(!dict[latin]){
+                dict[latin] = result[latin]
+                client.multi()
+                    .sadd("phrases",latin)
+                    .sadd("phrase-"+latin, result[latin])
+                    .exec();
+            }
+        }
+    })
+    res.end()
 });
 
 
