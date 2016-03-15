@@ -15,25 +15,36 @@
             <h1>Latin-O(nline)</h1>
             <h2>Üben</h2>
             <div class="row">
-                <div class=col-md-12>
-                    <form class="form-inline" name="testForm">
+                <div class=col-md-6>
+                    <form class="form-horizontal" name="testForm">
                         <div class="form-group">
-                            <label for="current-german">{{current_latin}}:</label>
-                            <input name="current-german" class="form-control" ng-model="current_german" />
+                            <label for="current-latin" class="col-sm-2 control-label">Latein:</label>
+                            <div class="col-sm-10">
+                                <p name="current-latin" class="form-control-static">{{current_latin}}</p>
+                            </div>
                         </div>
-                        <button class="btn btn-primary btn-sm" type="submit" ng-click="check()">Prüfen</button>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="current-german">Deutsch:</label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input name="current-german" class="form-control" ng-model="current_german" />
+                                    <span class="input-group-btn"><button class="btn btn-primary" type="submit" ng-click="check()">Prüfen</button></span>
+                                </div>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
-                <div class="col-md-12">
-                    <div class="col-md-2" ng-if="correct">
+                <div class="col-md-6">
+                    <div class="text-success" ng-if="correct">
                         <span class="glyphicon glyphicon-ok"></span> Korrekt!
                     </div>
-                    <div class="col-md-2" ng-if="!correct">
+                    <div class="text-warning" ng-if="!correct">
                         <span class="glyphicon glyphicon-remove"></span> Fehler!
                     </div>
-                    <ul class="col-md-10">
-                        <li ng-repeat="mistake in mistakes track by $index">{{mistake}}</li>
-                    </ul>
+                    <table class="table table-condensed">
+                        <tr ng-repeat="mistake in mistakes track by $index" class="warning"><td>{{mistake}}</td></tr>
+                    </table>
                 </div>
             </div>
 
@@ -42,24 +53,27 @@
                 <div class="col-md-12">
                     <form class="form-inline">
                         <div class="form-group">
-                            <label for="latin">Latein:</label>
+                            <label class="control-label" for="latin">Latein:</label>
                             <input name="latin" class="form-control" ng-model="latin" />
                         </div>
 
                         <div class="form-group">
-                            <label for="german">Deutsch:</label>
+                            <label class="control-label" for="german">Deutsch:</label>
                             <input name="german" class="form-control" ng-model="german" />
                         </div>
-                        <button type="submit" class="btn btn-primary btn-sm " ng-click="addTranslation()">Hinzufügen</button>
+                        <button type="submit" class="btn btn-primary " ng-click="addTranslation()">Hinzufügen</button>
                     </form>
                 </div>
                 <div class="col-md-12">
-                    <ul ng-if="dictionary">
-                        <li ng-repeat="latin in keys|orderBy">{{latin}} :
-                            <span ng-repeat="german in dictionary[latin] track by $index">{{german}}<span ng-if="!$last">, </span></span>
-                            <button ng-if="enable_remove" type="button" class="btn btn-link" ng-click="remove(latin)"><span class="glyphicon glyphicon-remove"></span></button-->
-                        </li>
-                    </ul>
+                    <table ng-if="dictionary" class="table table-condensed table-hover">
+                        <tr><th>Latein</th><th>Deutsch</th><th ng-if="enable_remove">Löschen</th></tr>
+                        <tr ng-repeat="latin in keys|orderBy"><td>{{latin}}</td><td>
+                            <span ng-repeat="german in dictionary[latin] track by $index">{{german}}<span ng-if="!$last">, </span></span></td>
+                            <td ng-if="enable_remove">
+                                <button type="button" class="btn btn-link" ng-click="remove(latin)"><span class="glyphicon glyphicon-remove"></span></button>
+                            </td>
+                        </tr>
+                    </table>
                     <span ng-if="dictionary">Anzahl Einträge: {{numEntries()}}</span> <a href="download">Wörterbuch herunterladen.</a>
                 </div>
             </div>
