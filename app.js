@@ -2,7 +2,7 @@
 // Enable deletion of phrases
 const ENABLE_REMOVE = true;
 // List of levels available for phrases
-const LEARN_LEVELS = [3, 14, 42];
+const LEARN_LEVELS = [0, 1, 3, 7, 14, 28, 42];
 
 var express = require('express');
 var app = express();
@@ -56,11 +56,11 @@ function getKeys(match, all_keys, cursor) {
 	return client.scanAsync(
 		cursor,
 		'match', match,
-        'count', 100
+		'count', 100
 	).then(res => {
 		let next_cursor = res[0]
 		let keys = res[1]
-		// console.log(`Result for ${cursor}: next_cursor: ${next_cursor}, keys: ${keys.toString()}`)
+			// console.log(`Result for ${cursor}: next_cursor: ${next_cursor}, keys: ${keys.toString()}`)
 		if (next_cursor === '0') {
 			return all_keys.concat(keys)
 		} else {
@@ -77,10 +77,10 @@ app.get('/dictionary', function(req, res) {
 
 app.get('/learnset', function(req, res) {
 	getKeys('learnset:correct:*').then(correct => {
-        console.log(`Correct keys: [${correct}]`)
+		console.log(`Correct keys: [${correct}]`)
 		return client.sdiffAsync(['phrases'].concat(correct))
 	}).then(learnset => {
-        console.log(`Learnset size: ${learnset.length}`)
+		console.log(`Learnset size: ${learnset.length}`)
 		res.json(learnset)
 	})
 })
@@ -91,39 +91,39 @@ app.get('/reset_learnset', function(req, res) {
 		return client.delAsync(keys)
 	}).then(del_res => {
 		console.log(`Deletion result: ${del_res}`)
-        res.end("Successfully deleted learnsets.")        		
+		res.end("Successfully deleted learnsets.")
 	})
 })
 
-app.post('/correct',function(req,res){
-    const phrase = req.body.phrase
-    const day = moment().format('YYYYMMDD')
-    client.getAsync(`learnset:level:${phrase}`).then(old_lvl => {
-        old_lvl = old_lvl || 0
-        let lvl = Math.min(old_lvl+1,LEARN_LEVELS.length - 1)
-        console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
-        return client.multi()
-            .sadd(`learnset:correct:${lvl}:${day}`,phrase)
-            .expire(`learnset:correct:${lvl}:${day}`,LEARN_LEVELS[lvl]*3600*24)
-            .set(`learnset:level:${phrase}`,lvl)
-            .execAsync()
-    }).then(r => {
-        console.log(`Update learn level result: ${r}`)
-        res.end("Successfully updated learn level")
-    })
+app.post('/correct', function(req, res) {
+	const phrase = req.body.phrase
+	const day = moment().format('YYYYMMDD')
+	client.getAsync(`learnset:level:${phrase}`).then(old_lvl => {
+		old_lvl = old_lvl || 0
+		let lvl = Math.min(old_lvl + 1, LEARN_LEVELS.length - 1)
+		console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
+		return client.multi()
+			.sadd(`learnset:correct:${lvl}:${day}`, phrase)
+			.expire(`learnset:correct:${lvl}:${day}`, LEARN_LEVELS[lvl] * 3600 * 24)
+			.set(`learnset:level:${phrase}`, lvl)
+			.execAsync()
+	}).then(r => {
+		console.log(`Update learn level result: ${r}`)
+		res.end("Successfully updated learn level")
+	})
 })
 
-app.post('/incorrect',function(req,res){
-    const phrase = req.body.phrase
-    client.getAsync(`learnset:level:${phrase}`).then(old_lvl =>{
-        old_lvl = old_lvl || 0
-        let lvl = Math.max(old_lvl-1,0)
-        console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
-        return client.setAsync(`learnset:level:${phrase}`,lvl)
-    }).then(r => {
-        console.log(`Update learn level result: ${r}`)
-        res.end("Successfully updated learn level")
-    })
+app.post('/incorrect', function(req, res) {
+	const phrase = req.body.phrase
+	client.getAsync(`learnset:level:${phrase}`).then(old_lvl => {
+		old_lvl = old_lvl || 0
+		let lvl = Math.max(old_lvl - 1, 0)
+		console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
+		return client.setAsync(`learnset:level:${phrase}`, lvl)
+	}).then(r => {
+		console.log(`Update learn level result: ${r}`)
+		res.end("Successfully updated learn level")
+	})
 })
 
 
