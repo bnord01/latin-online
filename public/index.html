@@ -14,6 +14,7 @@
         <div ng-controller="LatinOController">
             <h1>Latin-O(nline)</h1>
             <h2><span class="glyphicon glyphicon-education"></span> Üben</h2>
+            <p>Zu übende Wörter: <span ng-if="learnset">{{learnset.length}}</span><span ng-if="!learnset">lädt...</span></p>
             <div class="row">
                 <div class=col-md-6>
                     <form class="form-horizontal" name="testForm">
@@ -93,6 +94,14 @@
                     </form>
                 </div>
             </div>
+            <!--
+            <h2>Zu übende Wörter: <span ng-if="learnset">{{learnset.length}}</span></h2>
+            <div ng-if="learnset">
+                <ul>
+                    <li ng-repeat="latin in learnset">{{latin}}</li>
+                </ul>
+            </div>
+            -->
         </div>
     </div>
 

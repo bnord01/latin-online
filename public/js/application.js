@@ -4,6 +4,7 @@ const ENABLE_REMOVE = true;
 angular.module("latin-o", ['ui.bootstrap'])
   .controller("LatinOController", function($scope, $http, $filter, $uibModal) {
     $scope.dictionary;
+    $scope.learnset;
     $scope.keys;
     $scope.current_latin;
     $scope.current_german = "";
@@ -14,6 +15,10 @@ angular.module("latin-o", ['ui.bootstrap'])
     $http.get("dictionary").success(function(data) {
       $scope.dictionary = data;
       $scope.keys = Object.keys($scope.dictionary);
+    });
+
+    $http.get("learnset").success(function(data) {
+      $scope.learnset = data;
       updateRandomLatin();
     });
 
@@ -44,14 +49,17 @@ angular.module("latin-o", ['ui.bootstrap'])
     }
 
     function updateRandomLatin() {
-        let keys = $scope.keys;
-        $scope.current_latin = keys[Math.floor(Math.random() * keys.length)];
-        $scope.current_german = "";
+        let learnset = $scope.learnset;
+        if(learnset.length>0) {
+            $scope.current_latin = learnset[Math.floor(Math.random() * learnset.length)];
+            $scope.current_german = "";
+        }
     }
 
     $scope.check = function() {
         let input = $scope.current_german.split(",").map(x=>x.trim());
-        let expected = $scope.dictionary[$scope.current_latin];
+        let latin = $scope.current_latin
+        let expected = $scope.dictionary[latin];
         let correct = false
         let mistakes = [];
         for(let e of expected) {
@@ -69,6 +77,13 @@ angular.module("latin-o", ['ui.bootstrap'])
         }
         $scope.correct = correct;
         $scope.mistakes = mistakes;
+        if(correct){
+            let idx = $scope.learnset.indexOf(latin)
+            $scope.learnset.splice(idx,1)
+            $http.post("correct",{phrase:latin})
+        } else {            
+            $http.post("incorrect",{phrase:latin})
+        }
         updateRandomLatin();
     }
 
