@@ -154,11 +154,15 @@ app.post('/translation', function(req, res) {
 app.post('/remove', function(req, res) {
     if (ENABLE_REMOVE) {
         const latin = req.body.latin;
-        delete dictionary[latin];
+        dictionary.then(dict => {
+            delete dict[latin];
+        })
         client.srem("phrases", latin)
         client.del("phrase-" + latin)
+        console.log(`Removed phrase ${latin} from database.`)
         res.end()
     } else {
+        console.log(`Didn't remove phrase ${latin} from database because ENABLE_REMOVE is not set.`)
         res.status(403).end()
     }
 });
