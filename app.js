@@ -101,10 +101,11 @@ app.post('/correct', function(req, res) {
 	client.getAsync(`learnset:level:${phrase}`).then(old_lvl => {
 		old_lvl = old_lvl || 0
 		let lvl = Math.min(old_lvl + 1, LEARN_LEVELS.length - 1)
+        let expire = moment().startOf('day').add(3,'hours').add(LEARN_LEVELS[lvl],'days').unix()
 		console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
 		return client.multi()
 			.sadd(`learnset:correct:${lvl}:${day}`, phrase)
-			.expire(`learnset:correct:${lvl}:${day}`, LEARN_LEVELS[lvl] * 3600 * 24)
+			.expireat(`learnset:correct:${lvl}:${day}`, expire)
 			.set(`learnset:level:${phrase}`, lvl)
 			.execAsync()
 	}).then(r => {
