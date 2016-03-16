@@ -63,7 +63,7 @@ function getKeys(match, all_keys, cursor) {
 
 app.get('/dictionary', function(req, res) {
     dictionary.then(dic => {
-        console.log(`Sending dictionary with ${Object.keys(dict).length} keys.`)
+        console.log(`Sending dictionary with ${Object.keys(dic).length} keys.`)
         res.json(dic);
     });
 });
