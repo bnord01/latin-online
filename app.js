@@ -63,6 +63,7 @@ function getKeys(match, all_keys, cursor) {
 
 app.get('/dictionary', function(req, res) {
     dictionary.then(dic => {
+        console.log(`Sending dictionary with ${Object.keys(dict).length} keys.`)
         res.json(dic);
     });
 });
@@ -72,7 +73,7 @@ app.get('/learnset', function(req, res) {
         console.log(`Correct keys: [${correct}]`)
         return client.sdiffAsync(['phrases'].concat(correct))
     }).then(learnset => {
-        console.log(`Learnset size: ${learnset.length}`)
+        console.log(`Returning learnset of size: ${learnset.length}`)
         res.json(learnset)
     })
 })
@@ -126,6 +127,7 @@ app.get('/download', function(req, res) {
         res.set('Content-Type', 'application/json')
         let replacer = app.get('json replacer');
         let body = JSON.stringify(dict, replacer, 2);
+        console.log(`Sending dictionary for download with ${Object.keys(dict).length} keys.`)
         res.send(body);
     })
 });
@@ -135,6 +137,7 @@ app.post('/translation', function(req, res) {
     const german = req.body.german.split(",").map(x => x.trim());
     dictionary.then(dict => {
         if (!dict[latin]) {
+            console.log(`Adding translation ${latin} : [${german}]`)
             dict[latin] = german
             client.multi()
                 .sadd("phrases", latin)
@@ -142,6 +145,7 @@ app.post('/translation', function(req, res) {
                 .exec();
             res.end()
         } else {
+            console.log(`Phrase ${latin} already existed, ignoring query.`)
             res.status(409).end()
         }
     })
