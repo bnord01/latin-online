@@ -92,7 +92,7 @@ app.post('/correct', function(req, res) {
     const phrase = req.body.phrase
     const day = moment().format('YYYYMMDD')
     client.getAsync(`learnset:level:${phrase}`).then(old_lvl => {
-        old_lvl = old_lvl || 0
+        old_lvl = parseInt(old_lvl) || 0
         let lvl = Math.min(old_lvl + 1, LEARN_LEVELS.length - 1)
         let expire = moment().startOf('day').add(3, 'hours').add(LEARN_LEVELS[lvl], 'days').unix()
         console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
@@ -110,7 +110,7 @@ app.post('/correct', function(req, res) {
 app.post('/incorrect', function(req, res) {
     const phrase = req.body.phrase
     client.getAsync(`learnset:level:${phrase}`).then(old_lvl => {
-        old_lvl = old_lvl || 0
+        old_lvl = parseInt(old_lvl) || 0
         let lvl = Math.max(old_lvl - 1, 0)
         console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
         return client.setAsync(`learnset:level:${phrase}`, lvl)
