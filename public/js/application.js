@@ -74,6 +74,8 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
         }
 
         $scope.check = function() {
+            if(!$scope.current_german)
+                return;
             let input = $scope.current_german.split(",").map(x => x.trim());
             let latin = $scope.current_latin
             let expected = $scope.dictionary[latin];

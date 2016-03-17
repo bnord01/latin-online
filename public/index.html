@@ -28,7 +28,7 @@
                             <label class="col-sm-2 control-label" for="current-german">Deutsch:</label>
                             <div class="col-sm-10">
                                 <div class="input-group">
-                                    <input name="current-german" class="form-control" ng-model="current_german" />
+                                    <input name="current-german" class="form-control" ng-model="current_german" required />
                                     <span class="input-group-btn"><button class="btn btn-primary" type="submit" ng-click="check()">Prüfen</button></span>
                                 </div>
                             </div>
@@ -37,17 +37,17 @@
                 </div>
                 <div class="col-md-6">
                     <div ng-if='last_latin' class='form-horizontal'>
-                        <div class="form-group nopadding nomargin">
+                        <div class="form-group no-padding no-margin">
                             <label for="last-latin" class="col-sm-2 control-label">Letzte:</label>
                             <div class="col-sm-10">
-                                <p name="last-latin" class="form-control-static nopadding nomargin">{{last_latin}}
+                                <p name="last-latin" class="form-control-static no-padding no-margin">{{last_latin}}
                                     <br/>{{last_expected}}</p>
                             </div>
                         </div>
-                        <div class="form-group nomargin" ng-class="{'has-error':!correct, 'has-success':correct}">
+                        <div class="form-group no-margin" ng-class="{'has-error':!correct, 'has-success':correct}">
                             <label for="last-input" class="col-sm-2 control-label">Eingabe:</label>
                             <div class="col-sm-10">
-                                <p name="last-input" class="form-control-static nomargin" ng-class="{'text-danger':!correct,'text-success':correct}" >{{last_input}}
+                                <p name="last-input" class="form-control-static no-margin" ng-class="{'text-danger':!correct,'text-success':correct}" >{{last_input}}
                                     <span class="glyphicon glyphicon-ok" ng-if="correct"></span>
                                     <span class="glyphicon glyphicon-remove"  ng-if="!correct">
                                 </p>
@@ -80,13 +80,14 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <div class="form-group nomargin" ng-class="{'has-error':dict_conflict}">
-                                            <input name="latin" class="form-control" ng-model="latin" form="add-form" focus-on="focusLatin"/>
+                                        <div class="form-group no-margin" ng-class="{'has-error':dict_conflict}">
+                                            <input name="latin" class="form-control" ng-model="latin" form="add-form" focus-on="focusLatin" aria-describedby="helpBlockLatin" required/>
+                                            <span ng-show="dict_conflict" id="helpBlockLatin" class="help-block no-bot-margin">Phrase existiert bereits.</span>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="form-group nomargin" ng-class="{'has-error':dict_conflict}">
-                                            <input name="german" class="form-control" ng-model="german" form="add-form" />
+                                        <div class="form-group no-margin">
+                                            <input name="german" class="form-control" ng-model="german" form="add-form" required/>
                                         </div>
                                     </td>
                                     <td>
