@@ -13,10 +13,10 @@
     <div class="container">
         <div ng-controller="LatinOController">
             <h1>Latin-O(nline)</h1>
-            <h2><span class="glyphicon glyphicon-education"></span> Üben</h2>
-            <p>Zu übende Wörter: <span ng-if="learnset">{{learnset.length}}</span><span ng-if="!learnset">lädt...</span></p>
             <div class="row">
                 <div class=col-md-6>
+                    <h2><span class="glyphicon glyphicon-education"></span> Üben</h2>
+                    <p>Zu übende Wörter: <span ng-if="learnset">{{learnset.length}}</span><span ng-if="!learnset">lädt...</span></p>
                     <form class="form-horizontal" name="testForm">
                         <div class="form-group">
                             <label for="current-latin" class="col-sm-2 control-label">Latein:</label>
@@ -33,21 +33,34 @@
                                 </div>
                             </div>
                         </div>
-
                     </form>
                 </div>
                 <div class="col-md-6">
-                    <div class="text-success" ng-if="correct">
-                        <span class="glyphicon glyphicon-ok"></span> Korrekt!
+                    <div ng-if='last_latin' class='form-horizontal'>
+                        <div class="form-group nopadding nomargin">
+                            <label for="last-latin" class="col-sm-2 control-label">Letzte:</label>
+                            <div class="col-sm-10">
+                                <p name="last-latin" class="form-control-static nopadding nomargin">{{last_latin}}
+                                    <br/>{{last_expected}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group nomargin" ng-class="{'has-error':!correct, 'has-success':correct}">
+                            <label for="last-input" class="col-sm-2 control-label">Eingabe:</label>
+                            <div class="col-sm-10">
+                                <p name="last-input" class="form-control-static nomargin" ng-class="{'text-danger':!correct,'text-success':correct}" >{{last_input}}
+                                    <span class="glyphicon glyphicon-ok" ng-if="correct"></span>
+                                    <span class="glyphicon glyphicon-remove"  ng-if="!correct">
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <table class="table table-condensed">
+                            <tr ng-repeat="mistake in mistakes track by $index" class="warning">
+                                <td>{{mistake}}</td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="text-warning" ng-if="!correct">
-                        <span class="glyphicon glyphicon-remove"></span> Fehler!
-                    </div>
-                    <table class="table table-condensed">
-                        <tr ng-repeat="mistake in mistakes track by $index" class="warning">
-                            <td>{{mistake}}</td>
-                        </tr>
-                    </table>
                 </div>
             </div>
 

@@ -10,6 +10,9 @@ angular.module("latin-o", ['ui.bootstrap'])
     $scope.current_german = "";
     $scope.correct = true;
     $scope.mistakes=[];
+    $scope.last_latin
+    $scope.last_expected
+    $scope.last_input
     $scope.enable_remove = ENABLE_REMOVE;
 
     $http.get("dictionary").success(function(data) {
@@ -77,11 +80,15 @@ angular.module("latin-o", ['ui.bootstrap'])
         }
         $scope.correct = correct;
         $scope.mistakes = mistakes;
+        $scope.last_latin = $scope.current_latin
+        $scope.last_input = $scope.current_german
+        $scope.last_expected = expected.join(', ')
+
         if(correct){
             let idx = $scope.learnset.indexOf(latin)
             $scope.learnset.splice(idx,1)
             $http.post("correct",{phrase:latin})
-        } else {            
+        } else {
             $http.post("incorrect",{phrase:latin})
         }
         updateRandomLatin();
