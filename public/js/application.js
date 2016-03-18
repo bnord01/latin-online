@@ -118,10 +118,15 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
             $scope.remove = function(latin) {
                 let r = confirm("Eintrag " + latin + " wirklich löschen?")
                 if (r) {
-                    delete $scope.dictionary[latin];
-                    $scope.keys = Object.keys($scope.dictionary)
                     $http.post("remove", {
                         latin: latin
+                    }).then(() => {
+                        let german = $scope.dictionary[latin]
+                        delete $scope.dictionary[latin];
+                        $scope.keys = Object.keys($scope.dictionary)
+                        $scope.latin = latin
+                        $scope.german = german.join(', ')                        
+                        focus('focusLatin')
                     })
                     updateRandomLatin();
                 }
