@@ -102,7 +102,9 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
 
             if (correct) {
                 let idx = $scope.learnset.indexOf(latin)
-                $scope.learnset.splice(idx, 1)
+                if(idx != -1){
+                    $scope.learnset.splice(idx,1)
+                }
                 $http.post("correct", {
                     phrase: latin
                 })
@@ -125,7 +127,7 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
                         delete $scope.dictionary[latin];
                         $scope.keys = Object.keys($scope.dictionary)
                         let idx = $scope.learnset.indexOf(latin)
-                        if(idx > -1){
+                        if(idx != -1){
                             $scope.learnset.splice(idx,1)
                         }
                         $scope.latin = latin
