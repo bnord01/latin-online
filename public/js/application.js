@@ -124,8 +124,12 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
                         let german = $scope.dictionary[latin]
                         delete $scope.dictionary[latin];
                         $scope.keys = Object.keys($scope.dictionary)
+                        let idx = $scope.learnset.indexOf(latin)
+                        if(idx > -1){
+                            $scope.learnset.splice(idx,1)
+                        }
                         $scope.latin = latin
-                        $scope.german = german.join(', ')                        
+                        $scope.german = german.join(', ')
                         focus('focusLatin')
                     })
                     updateRandomLatin();
