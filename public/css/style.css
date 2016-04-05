@@ -19,3 +19,7 @@
 .no-bot-margin {
     margin-bottom: 0px;
 }
+.result-smiley {
+    max-width: 200px;
+    width: 100%;
+}

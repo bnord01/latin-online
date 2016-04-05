@@ -35,7 +35,11 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-1 col-lg-2">
+                    <img class="result-smiley" ng-if="last_latin && correct" src="images/Smiley.svg" alt="Richtig" />
+                    <img class="result-smiley" ng-if="last_latin && !correct" src="images/Frowny.svg" alt="Falsch" />
+                </div>
+                <div class="col-md-5 col-lg-4">
                     <div ng-if='last_latin' class='form-horizontal'>
                         <div class="form-group no-padding no-margin">
                             <label for="last-latin" class="col-sm-2 control-label">Letzte:</label>
@@ -62,6 +66,7 @@
                         </table>
                     </div>
                 </div>
+
             </div>
 
             <h2><span class="glyphicon glyphicon-book"></span> Wörterbuch</h2>
