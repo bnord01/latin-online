@@ -69,6 +69,7 @@
                 <div class="col-md-12">
                     <p ng-if="!dictionary">Wörterbuch wird geladen ...</p>
                     <button type="button" class="btn btn-default btn-sm" ng-click="show_dict = !show_dict">Einträge {{show_dict?"verbergen":"anzeigen"}}</button>
+                    <button ng-if='last_latin && enable_remove' type="button" class="btn btn-default btn-sm" ng-click="remove(last_latin)">Letzten löschen</button>
                     <form ng-show="dictionary" class="form" id="add-form">
                         <table class="table table-condensed table-hover">
                             <thead>
