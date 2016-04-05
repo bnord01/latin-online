@@ -16,6 +16,7 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
     $scope.last_input
     $scope.enable_remove = ENABLE_REMOVE;
     $scope.dict_error
+    $scope.show_dict = false
 
     $http.get("dictionary").success(function(data) {
         $scope.dictionary = data;

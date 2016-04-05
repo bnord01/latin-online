@@ -68,6 +68,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <p ng-if="!dictionary">Wörterbuch wird geladen ...</p>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="show_dict = !show_dict">Einträge {{show_dict?"verbergen":"anzeigen"}}</button>
                     <form ng-show="dictionary" class="form" id="add-form">
                         <table class="table table-condensed table-hover">
                             <thead>
@@ -95,7 +96,7 @@
                                     </td>
                                 </tr>
 
-                                <tr ng-if="dictionary" ng-repeat="latin in keys|orderBy">
+                                <tr ng-if="show_dict && dictionary" ng-repeat="latin in keys|orderBy">
                                     <td>{{latin}}</td>
                                     <td>
                                         <span ng-repeat="german in dictionary[latin] track by $index">{{german}}<span ng-if="!$last">, </span></span>
