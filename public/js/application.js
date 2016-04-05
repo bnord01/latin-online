@@ -132,7 +132,7 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
                         $scope.learnset.splice(idx, 1)
                     }
                     $scope.latin = latin
-                    $scope.german = german.join(', ')
+                    $scope.german = german?german.join(', '):''
                     focus('focusLatin')
                 })
                 updateRandomLatin();
