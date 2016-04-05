@@ -72,19 +72,19 @@
        r=".5">
       <stop
          offset="0"
-         stop-color="yellow"
+         stop-color="red"
          id="stop11" />
       <stop
          offset=".75"
-         stop-color="yellow"
+         stop-color="red"
          id="stop13" />
       <stop
          offset=".95"
-         stop-color="#ee0"
+         stop-color="#e00"
          id="stop15" />
       <stop
          offset="1"
-         stop-color="#e8e800"
+         stop-color="#e80000"
          id="stop17" />
     </radialGradient>
   </defs>
