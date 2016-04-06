@@ -102,7 +102,7 @@ app.post('/correct', function(req, res) {
             .set(`learnset:level:${phrase}`, lvl)
             .execAsync()
     }).then(r => {
-        console.log(`Update learn level result: ${r}`)
+        console.log(`Update learn level result: ${r} for "${phrase}"`)
         res.end("Successfully updated learn level")
     })
 })
@@ -115,7 +115,7 @@ app.post('/incorrect', function(req, res) {
         console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
         return client.setAsync(`learnset:level:${phrase}`, lvl)
     }).then(r => {
-        console.log(`Update learn level result: ${r}`)
+        console.log(`Update learn level result: ${r} for "${phrase}"`)
         res.end("Successfully updated learn level")
     })
 })
