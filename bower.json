@@ -19,7 +19,8 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.5.2",
+    "angular": "~1.5.3",
+    "angular-animate": "~1.5.3",
     "bootstrap": "~3.3.6",
     "angular-bootstrap": "~1.2.5"
   }

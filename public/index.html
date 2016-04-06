@@ -35,9 +35,11 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-1 col-lg-2">
-                    <img class="result-smiley" ng-if="last_latin && correct" src="images/Smiley.svg" alt="Richtig" />
-                    <img class="result-smiley" ng-if="last_latin && !correct" src="images/Frowny.svg" alt="Falsch" />
+                <div class="col-md-1 col-lg-2 result-smiley-container">
+                    <img class="result-smiley" ng-if="last_latin && correct && odd" src="images/Smiley.svg" alt="Richtig" />
+                    <img class="result-smiley" ng-if="last_latin && !correct && odd" src="images/Frowny.svg" alt="Falsch" />
+                    <img class="result-smiley" ng-if="last_latin && correct && !odd" src="images/Smiley.svg" alt="Richtig" />
+                    <img class="result-smiley" ng-if="last_latin && !correct && !odd" src="images/Frowny.svg" alt="Falsch" />
                 </div>
                 <div class="col-md-5 col-lg-4">
                     <div ng-if='last_latin' class='form-horizontal'>
@@ -131,6 +133,7 @@
     </div>
 
     <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="js/application.js"></script>

@@ -1,7 +1,7 @@
 'use strict';
 const ENABLE_REMOVE = true;
 
-const app = angular.module("latin-o", ['ui.bootstrap'])
+const app = angular.module("latin-o", ['ui.bootstrap','ngAnimate'])
 
 app.controller("LatinOController", function($scope, $http, $filter, $uibModal, focus) {
     $scope.dictionary;
@@ -77,6 +77,7 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
     $scope.check = function() {
         if (!$scope.current_german)
             return;
+        $scope.odd = !$scope.odd
         let input = $scope.current_german.split(",").map(x => x.trim());
         let latin = $scope.current_latin
         let expected = $scope.dictionary[latin];

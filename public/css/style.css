@@ -19,7 +19,45 @@
 .no-bot-margin {
     margin-bottom: 0px;
 }
+
+.result-smiley-container {
+  padding:0px;
+  background:white;
+  overflow:hidden;
+}
+.result-smiley-container:before{
+	content: "";
+	display: block;
+	padding-top: 100%;
+}
 .result-smiley {
-    max-width: 200px;
-    width: 100%;
+  /* Usually in .ng-animate but we want a fixed aspect ratio container*/
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+
+  max-width:200px;
+  width:100%;
+}
+
+.result-smiley.ng-animate {
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+}
+
+.result-smiley.ng-leave.ng-leave-active {
+  top:200px;
+}
+
+.result-smiley.ng-enter {
+  top:-200px;
+}
+
+.result-smiley.ng-leave {
+  top:0;
+}
+
+.result-smiley.ng-enter.ng-enter-active {
+  top:0;
 }
