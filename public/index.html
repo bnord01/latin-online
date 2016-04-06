@@ -77,7 +77,7 @@
                     <p ng-if="!dictionary">Wörterbuch wird geladen ...</p>
                     <button type="button" class="btn btn-default btn-sm" ng-click="show_dict = !show_dict">Einträge {{show_dict?"verbergen":"anzeigen"}}</button>
                     <button ng-if='last_latin && enable_remove && dictionary[last_latin]' type="button" class="btn btn-default btn-sm" ng-click="remove(last_latin)">Letzten löschen</button>
-                    <form ng-show="dictionary" class="form" id="add-form">
+                    <form ng-show="dictionary" class="form" name="add-form" ng-submit="addTranslation()">
                         <table class="table table-condensed table-hover">
                             <thead>
                                 <tr>
@@ -100,7 +100,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <button type="submit" class="btn btn-primary " ng-click="addTranslation()" form="add-form">Hinzufügen</button>
+                                        <button type="submit" class="btn btn-primary"  form="add-form">Hinzufügen</button>
                                     </td>
                                 </tr>
 
