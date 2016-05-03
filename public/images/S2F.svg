@@ -1,0 +1,102 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg>
+<svg version="1.1" baseProfile="full" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" zoomAndPan="magnify"
+   id="Test File"
+   viewBox="-21 -21 42 42"
+   width="800"
+   height="800">
+
+<defs>
+<radialGradient id="shine"
+      cx=".2" cy=".2" r=".5" fx=".2" fy=".2">
+  <stop offset="0" stop-color="white" stop-opacity=".7"/>
+  <stop offset="1" stop-color="white" stop-opacity="0"/>
+</radialGradient>
+
+<radialGradient id="grad"
+      cx=".5" cy=".5" r=".5" >
+  <stop offset="0" stop-color="red">
+      <animate
+          attributeName="stop-color"
+          from="yellow"
+          to="red"
+          dur="3s"
+          />
+  </stop>
+  <stop offset=".75" stop-color="red">
+      <animate
+          attributeName="stop-color"
+          from="yellow"
+          to="red"
+          dur="3s"
+          />
+  </stop>
+  <stop offset=".95" stop-color="#e00">
+      <animate
+          attributeName="stop-color"
+          from="#ee0"
+          to="#e00"
+          dur="3s"
+          />
+  </stop>
+  <stop offset="1" stop-color="#e80000">
+      <animate
+          attributeName="stop-color"
+          from="#e8e800"
+          to="#e80000"
+          dur="3s"
+          />
+  </stop>
+</radialGradient>
+
+<marker id="dimple"
+        viewBox="0 0 10 10"
+        refX="0.3" refY="3"
+        markerWidth="12"
+        markerHeight="12"
+        orient="auto-start-reverse">
+    <path fill="none" stroke="black" stroke-width=".5" stroke-linecap="round" d="M 1,1 a 4,4,0 0,0 0,4"/>
+</marker>
+</defs>
+
+<circle r="20" stroke="black" stroke-width=".15" fill="url(#grad)"/>
+<circle r="20" fill="url(#shine)"/>
+
+<g id="right">
+  <ellipse rx="2.5" ry="4" cx="-6" cy="-7" fill="black"/>
+</g>
+<use xlink:href="#right" transform="scale(-1,1)"/>
+
+<path fill="none" stroke="black" stroke-width=".75" d="M 12,9 Q 0,5 -12,9 M 12,9 Q 0,4 -12,9" marker-end="url(#dimple)" marker-start="url(#dimple)">
+    <animate attributeType="XML"
+      attributeName="d"
+      from="M 12,5 Q 0,19 -12,5 M 12,5 Q 0,20.4 -12,5"
+      to="M 12,9 Q 0,5 -12,9 M 12,9 Q 0,4 -12,9"
+      dur="3s"
+      />
+</path>
+
+<!--
+<path fill="none" stroke="black" stroke-width=".75" d="M -12,5 A 13.5,13.5,0 0,0 12,5 A 13,13,0 0,1 -12,5">
+    <animate attributeType="XML"
+      attributeName="d"
+      from="M 12,9 A 13.5,13.5,0 0,0 -12,9 A 13,13,0 0,1 12,9"
+      to="M -12,5 A 13.5,13.5,0 0,0 12,5 A 13,13,0 0,1 -12,5"
+      dur="3s"
+      />
+</path>
+<path fill="none" stroke="black" stroke-width=".75" d="M -12,5 A 13.5,13.5,0 0,0 12,5 A 13,13,0 0,1 -12,5">
+    <animate attributeType="XML"
+      attributeName="d"
+      values="M 12,9 A 13.5,13.5,0 0,0 -12,9 A 13,13,0 0,1 12,9;
+      M 12,7 L -12,7;
+      M -12,5 A 13.5,13.5,0 0,0 12,5 A 13,13,0 0,1 -12,5"
+      dur="3s"
+      />
+</path>
+-->
+<!--path stroke="blue" d="M -12,5 L 13,5"/-->
+<!--path fill="none" stroke="red" stroke-width=".75" d="M 12,5 A 13.5,13.5,0 0,0 -12,5 A 13,13,0 0,1 12,5">
+
+</path-->
+</svg>
