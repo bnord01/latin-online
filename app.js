@@ -220,4 +220,24 @@ app.get('/learnstats', function(req, res) {
     })
 })
 
+app.get('/fulldownload', function(req, res) {
+    client.smembersAsync("phrases").then(res => {
+        let promises = []
+        let dict = {}
+        for (let key of res) {
+            promises.push(client.multi().get(`learnset:level:${phrase}`).smembers("phrase-" + key).execAsync().then(val => {
+                dict[key] = val;
+            }))
+        }
+        return Promise.all(promises).then(() => dict)
+    }).then(dict => {
+        res.set('Content-Disposition', 'attachment; filename="dictionary.json"')
+        res.set('Content-Type', 'application/json')
+        let replacer = app.get('json replacer');
+        let body = JSON.stringify(dict, replacer, 2);
+        console.log(`Sending dictionary for download with ${Object.keys(dict).length} keys.`)
+        res.send(body);
+    })
+});
+
 app.listen(process.env.PORT || 3000);
