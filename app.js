@@ -232,7 +232,7 @@ app.get('/fulldownload', function(req, res) {
         }
         return Promise.all(promises).then(() => dict)
     }).then(dict => {
-        res.set('Content-Disposition', 'attachment; filename="dictionary.json"')
+        res.set('Content-Disposition', 'attachment; filename="full_dictionary.json"')
         res.set('Content-Type', 'application/json')
         let replacer = app.get('json replacer');
         let body = JSON.stringify(dict, replacer, 2);
