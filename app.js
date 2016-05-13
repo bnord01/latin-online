@@ -205,7 +205,17 @@ app.get('/skipday', function(req, res) {
             )
         }))
     }).then(result => {
-        console.log(`Updated ${result.length} keys: ${result}`)
+        console.log(`Updated ${result.length} keys: [${result}]`)
+        res.json(result)
+    })
+})
+
+app.get('/learnstats', function(req, res) {
+    getKeys('learnset:correct:*').then(correct => {
+        console.log(`Keys in learnset for stats: [${correct}]`)
+        return Promise.all(correct.map(key => client.multi().ttl(key).scard(key).execAsync().then(r => [key,r])))
+    }).then(result => {
+        console.log(`Stats result ${result.length}: [${result}]`)
         res.json(result)
     })
 })
