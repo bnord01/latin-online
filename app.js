@@ -225,7 +225,7 @@ app.get('/fulldownload', function(req, res) {
         let promises = []
         let dict = {}
         for (let key of res) {
-            promises.push(client.multi().get(`learnset:level:${phrase}`).smembers("phrase-" + key).execAsync().then(val => {
+            promises.push(client.multi().get(`learnset:level:${key}`).smembers("phrase-" + key).execAsync().then(val => {
                 dict[key] = val;
             }))
         }
