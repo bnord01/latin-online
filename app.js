@@ -188,5 +188,26 @@ app.post('/upload', upload.single('dictionary'), function(req, res) {
     }).then(() => res.redirect("/"))
 });
 
+app.get('/skipday', function(req, res) {
+    getKeys('learnset:correct:*').then(correct => {
+        console.log(`Keys to update ttl: [${correct}]`)
+        return Promise.all(correct.map(key => {
+            return client.ttlAsync(key).then(
+                ttl => {
+                    if (ttl > 0) {
+                        console.log(`Updating ttl from ${ttl} to ${ttl+(24*3600)} for key ${key}.`)
+                        return client.expireAsync(key, ttl + (24 * 3600))
+                    } else {
+                        console.log(`Non positive ttl ${ttl} for key ${key}`)
+                        return -3
+                    }
+                }
+            )
+        }))
+    }).then(result => {
+        console.log(`Updated ${result.length} keys: ${result}`)
+        res.json(result)
+    })
+})
 
 app.listen(process.env.PORT || 3000);
