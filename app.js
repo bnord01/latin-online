@@ -3,6 +3,8 @@
 const ENABLE_REMOVE = true;
 // List of levels available for phrases
 const LEARN_LEVELS = [0, 1, 3, 7, 14, 28, 42];
+// Max level after mistake
+const MAX_MISTAKE = 2
 
 var express = require('express');
 var app = express();
@@ -111,7 +113,7 @@ app.post('/incorrect', function(req, res) {
     const phrase = req.body.phrase
     client.getAsync(`learnset:level:${phrase}`).then(old_lvl => {
         old_lvl = parseInt(old_lvl) || 0
-        let lvl = Math.max(old_lvl - 1, 0)
+        let lvl = Math.min(Math.max(old_lvl - 1, 0), MAX_MISTAKE)
         console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
         return client.setAsync(`learnset:level:${phrase}`, lvl)
     }).then(r => {
