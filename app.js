@@ -113,7 +113,7 @@ app.post('/incorrect', function(req, res) {
     const phrase = req.body.phrase
     client.getAsync(`learnset:level:${phrase}`).then(old_lvl => {
         old_lvl = parseInt(old_lvl) || 0
-        let lvl = Math.min(Math.max(old_lvl - 1, 0), MAX_MISTAKE)
+        let lvl = Math.min(Math.max(old_lvl - 2, 0), MAX_MISTAKE)
         console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
         return client.setAsync(`learnset:level:${phrase}`, lvl)
     }).then(r => {
