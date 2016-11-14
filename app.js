@@ -177,10 +177,13 @@ app.post('/upload', upload.single('dictionary'), function(req, res) {
         for (let latin in result) {
             if (!dict[latin]) {
                 count_add++
-                dict[latin] = result[latin]
+                let translation = result[latin][1]
+                let lvl = result[latin][0]
+                dict[latin] = translation
                 client.multi()
                     .sadd("phrases", latin)
-                    .sadd("phrase-" + latin, result[latin])
+                    .sadd("phrase-" + latin, translation)
+                    .set(`learnset:level:${latin}`, lvl)
                     .exec();
             } else {
                 count_ig++
