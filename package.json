@@ -21,7 +21,7 @@
   "license": "MIT",
   "devDependencies": {},
   "engines": {
-    "node": "^4.4.1",
+    "node": "^4.8.4",
     "npm": "^2.15.0"
   }
 }
