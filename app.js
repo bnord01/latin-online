@@ -113,7 +113,7 @@ app.post('/incorrect', function(req, res) {
     const phrase = req.body.phrase
     client.getAsync(`learnset:level:${phrase}`).then(old_lvl => {
         old_lvl = parseInt(old_lvl) || 0
-        let lvl = Math.min(Math.max(old_lvl - 1, 0), MAX_MISTAKE)
+        let lvl = Math.min(Math.max(old_lvl - 2, 0), MAX_MISTAKE)
         console.log(`Updating level ${old_lvl} -> ${lvl} for "${phrase}"`)
         return client.setAsync(`learnset:level:${phrase}`, lvl)
     }).then(r => {
@@ -177,10 +177,13 @@ app.post('/upload', upload.single('dictionary'), function(req, res) {
         for (let latin in result) {
             if (!dict[latin]) {
                 count_add++
-                dict[latin] = result[latin]
+                let translation = result[latin][1]
+                let lvl = result[latin][0]
+                dict[latin] = translation
                 client.multi()
                     .sadd("phrases", latin)
-                    .sadd("phrase-" + latin, result[latin])
+                    .sadd("phrase-" + latin, translation)
+                    .set(`learnset:level:${latin}`, lvl)
                     .exec();
             } else {
                 count_ig++
