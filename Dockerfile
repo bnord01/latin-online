@@ -3,9 +3,9 @@ FROM node
 RUN	mkdir -p /usr/src/app
 WORKDIR	/usr/src/app
 
-RUN	groupadd -r node \
-	&& useradd --home /usr/src/app -r -g node node \
-	&& chown -R node:node /usr/src/app
+#RUN	groupadd -r node \
+#	&& useradd --home /usr/src/app -r -g node node \
+RUN		chown -R node:node /usr/src/app
 
 USER	node
 

@@ -1,6 +1,6 @@
 'use strict';
 // Enable deletion of phrases
-const ENABLE_REMOVE = true;
+const ENABLE_REMOVE = false;
 // List of levels available for phrases
 const LEARN_LEVELS = [0, 1, 3, 7, 14, 28, 42];
 // Max level after mistake

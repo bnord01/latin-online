@@ -1,5 +1,6 @@
 'use strict';
-const ENABLE_REMOVE = true;
+const ENABLE_REMOVE = false;
+const NUM_OPTIONS = 5;
 
 const app = angular.module("latin-o", ['ui.bootstrap','ngAnimate'])
 
@@ -17,6 +18,8 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
     $scope.enable_remove = ENABLE_REMOVE;
     $scope.dict_error
     $scope.show_dict = false
+    $scope.mc = false
+    $scope.options = []
 
     $http.get("dictionary").success(function(data) {
         $scope.dictionary = data;
@@ -71,14 +74,39 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
         if (learnset.length > 0) {
             $scope.current_latin = learnset[Math.floor(Math.random() * learnset.length)];
             $scope.current_german = "";
+            let expected = $scope.dictionary[$scope.current_latin]
+            let options = [randomElement(expected)]
+            for (let i = 1; i < NUM_OPTIONS; i++) {
+                options[i] = randomElement($scope.dictionary[randomElement($scope.keys)])
+            }
+            shuffle(options)
+            $scope.options = options
         }
     }
 
-    $scope.check = function() {
-        if (!$scope.current_german)
+    function randomElement(a) {
+        return a[Math.floor(Math.random()*a.length)]
+    }
+
+    /**
+     * Shuffles array in place.
+     * @param {Array} a items An array containing the items.
+     */
+    function shuffle(a) {
+        var j, x, i;
+        for (i = a.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = a[i];
+            a[i] = a[j];
+            a[j] = x;
+        }
+    }
+
+    $scope.check = function(answer) {
+        if (!$scope.current_german && !answer)
             return;
         $scope.odd = !$scope.odd
-        let input = $scope.current_german.split(",").map(x => x.trim());
+        let input = answer ? [answer] : $scope.current_german.split(",").map(x => x.trim());
         let latin = $scope.current_latin
         let expected = $scope.dictionary[latin];
         let correct = false
