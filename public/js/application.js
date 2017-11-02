@@ -2,7 +2,7 @@
 const ENABLE_REMOVE = false;
 const NUM_OPTIONS = 5;
 
-const app = angular.module("latin-o", ['ui.bootstrap','ngAnimate'])
+const app = angular.module("latin-o", ['ui.bootstrap', 'ngAnimate'])
 
 app.controller("LatinOController", function($scope, $http, $filter, $uibModal, focus) {
     $scope.dictionary;
@@ -72,20 +72,30 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
     function updateRandomLatin() {
         let learnset = $scope.learnset;
         if (learnset.length > 0) {
-            $scope.current_latin = learnset[Math.floor(Math.random() * learnset.length)];
-            $scope.current_german = "";
+            $scope.current_latin = randomElement(learnset)
+            $scope.current_german = ""
             let expected = $scope.dictionary[$scope.current_latin]
             let options = [randomElement(expected)]
             for (let i = 1; i < NUM_OPTIONS; i++) {
-                options[i] = randomElement($scope.dictionary[randomElement($scope.keys)])
+                options[i] = randomElement($scope.dictionary[randomElement($scope.keys,category($scope.current_latin))])
             }
             shuffle(options)
             $scope.options = options
         }
     }
 
-    function randomElement(a) {
-        return a[Math.floor(Math.random()*a.length)]
+    function randomElement(a, cat) {
+        if (cat) {
+            var i = 0
+            var c = a[Math.floor(Math.random() * a.length)]
+            while (i < 100 && cat !== category(c)) {
+                c = a[Math.floor(Math.random() * a.length)]
+                i = i + 1
+            }
+            return c
+        } else {
+            return a[Math.floor(Math.random() * a.length)]
+        }
     }
 
     /**
@@ -99,6 +109,14 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
             x = a[i];
             a[i] = a[j];
             a[j] = x;
+        }
+    }
+
+    function category(word) {
+        if (/\s[fmn]( Pl)?$/.test(word)) {
+            return "noun"
+        } else {
+            return "other"
         }
     }
 
@@ -161,7 +179,7 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
                         $scope.learnset.splice(idx, 1)
                     }
                     $scope.latin = latin
-                    $scope.german = german?german.join(', '):''
+                    $scope.german = german ? german.join(', ') : ''
                     focus('focusLatin')
                 })
                 updateRandomLatin();
