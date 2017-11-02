@@ -21,14 +21,25 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
     $scope.mc = false
     $scope.options = []
 
+    var loaded = false
+
     $http.get("dictionary").success(function(data) {
-        $scope.dictionary = data;
+        $scope.dictionary = data
         $scope.keys = Object.keys($scope.dictionary);
+        if (loaded) {
+            updateRandomLatin()
+        } else {
+            loaded = true;
+        }
     });
 
     $http.get("learnset").success(function(data) {
-        $scope.learnset = data;
-        updateRandomLatin();
+        $scope.learnset = data
+        if (loaded) {
+            updateRandomLatin()
+        } else {
+            loaded = true;
+        }
     });
 
 
@@ -77,7 +88,7 @@ app.controller("LatinOController", function($scope, $http, $filter, $uibModal, f
             let expected = $scope.dictionary[$scope.current_latin]
             let options = [randomElement(expected)]
             for (let i = 1; i < NUM_OPTIONS; i++) {
-                options[i] = randomElement($scope.dictionary[randomElement($scope.keys,category($scope.current_latin))])
+                options[i] = randomElement($scope.dictionary[randomElement($scope.keys, category($scope.current_latin))])
             }
             shuffle(options)
             $scope.options = options
